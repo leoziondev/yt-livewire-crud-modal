@@ -1,6 +1,14 @@
 <div class="bg-white">
-    <div class="p-4 text-xl font-bold">Items</div>
+    <div class="p-4 text-xl font-bold">
+        Items
+    </div>
     <div>
+        <div class="flex justify-between p-4">
+            <div></div>
+            <div>
+                <input wire:model="active" type="checkbox" class="leading-tight" /> Active Only?
+            </div>
+        </div>
         <table class="table-auto w-full">
             <thead class="bg-gray-100">
                 <tr class="text-left">
