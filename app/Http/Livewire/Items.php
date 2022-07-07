@@ -16,7 +16,7 @@ class Items extends Component
     {
         $items = Item::where('user_id', auth()->user()->id)
             ->when($this->active, function($query) {
-                return $query->where('status', 1);
+                return $query->active();
             })
             ->paginate(10);
 
