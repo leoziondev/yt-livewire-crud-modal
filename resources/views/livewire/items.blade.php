@@ -22,7 +22,9 @@
                     <th class="text-md font-bold text-gray-700 p-4">ID</th>
                     <th class="text-md font-bold text-gray-700 p-4">Name</th>
                     <th class="text-md font-bold text-gray-700 p-4">Price</th>
+                    @if(!$active)
                     <th class="text-md font-bold text-gray-700 p-4">Status</th>
+                    @endif
                     <th></th>
                 </tr>
             </thead>
@@ -32,7 +34,9 @@
                     <td class="px-4 py-2">{{ $item->id }}</td>
                     <td class="px-4 py-2">{{ $item->name }}</td>
                     <td class="px-4 py-2">{{ number_format($item->price, 2)}}</td>
+                    @if(!$active)
                     <td class="px-4 py-2">{{ $item->status ? 'Active' : 'Not-Active' }}</td>
+                    @endif
                     <td class="px-4 py-2 flex justify-end"> edit delete</td>
                 </tr>
                 @endforeach
