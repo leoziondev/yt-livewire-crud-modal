@@ -3,8 +3,15 @@
         Items
     </div>
     <div>
-        <div class="flex justify-between p-4">
-            <div></div>
+        <div class="flex justify-between items-center p-4">
+            <div>
+                <input
+                    wire:model.debounce.500ms="q"
+                    type="search"
+                    placeholder="search"
+                    class="rounded-md border-gray-300"
+                />
+            </div>
             <div>
                 <input wire:model="active" type="checkbox" class="leading-tight" /> Active Only?
             </div>
