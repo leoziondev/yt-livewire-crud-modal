@@ -58,7 +58,14 @@
                     @if(!$active)
                     <td class="px-4 py-2">{{ $item->status ? 'Active' : 'Not-Active' }}</td>
                     @endif
-                    <td class="px-4 py-2 flex justify-end"> edit delete</td>
+                    <td class="px-4 py-2 flex justify-end">
+                        {{-- <button class="bg-gray-100 rounded-md p-2 mr-2 text-gray-400 hover:text-gray-600" wire:click="confirmItemEdit" wire:loading.attr="disabled">
+                            <x-icons.edit />
+                        </button> --}}
+                        <button wire:click="confirmItemDelete({{ $item->id }})" wire:loading.attr="disabled" class="bg-gray-100 rounded-md p-2 mr-2 text-gray-400 hover:text-white hover:bg-red-500">
+                            <x-icons.trash />
+                        </button>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
@@ -67,4 +74,24 @@
             {{ $items->links() }}
         </div>
     </div>
+
+    <x-jet-dialog-modal wire:model="confirmingItemDelete">
+        <x-slot name="title">
+            {{ __('Delete Item') }}
+        </x-slot>
+
+        <x-slot name="content">
+            Are you sure you want to delete this Item <strong>ID: {{ $confirmingItemDelete }}</strong>? This action is irreversible, please attention!
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-jet-secondary-button wire:click="$set('confirmingItemDelete', false)" wire:loading.attr="disabled">
+                {{ __('Cancel') }}
+            </x-jet-secondary-button>
+
+            <x-jet-danger-button class="ml-3" wire:click="deleteItem({{ $confirmingItemDelete }})" wire:loading.attr="disabled">
+                {{ __('Delete') }}
+            </x-jet-danger-button>
+        </x-slot>
+    </x-jet-dialog-modal>
 </div>
