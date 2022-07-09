@@ -13,15 +13,26 @@ class Items extends Component
     public $active;
     public $q;
     public $sortBy = 'id';
-    public $sortAsc = true;
+    public $sortAsc = false;
+
+    public $name;
+    public $price;
+    public $status = 0;
 
     public $confirmingItemDelete = false;
+    public $confirmingItemAdd = false;
 
     protected $queryString = [
         'active' => ['except' => false],
         'q' => ['except' => ''],
         'sortBy' => ['except' => 'id'],
         'sortAsc' => ['except' => true],
+    ];
+
+    protected $rules = [
+        'name'     => 'required|string|min:4',
+        'price'    => 'required|numeric|between:1,100',
+        'status'   => 'boolean'
     ];
 
     public function render()
@@ -63,6 +74,26 @@ class Items extends Component
             $this->sortAsc = !$this->sortAsc;
         }
         $this->sortBy = $field;
+    }
+
+    public function confirmItemAdd()
+    {
+        $this->reset();
+        $this->confirmingItemAdd = true;
+    }
+
+    public function saveItem()
+    {
+        $this->validate();
+
+        Item::create([
+            'user_id'   => auth()->user()->id,
+            'name'      => $this->name,
+            'price'     => $this->price,
+            'status'    => $this->status,
+        ]);
+
+        $this->confirmingItemAdd = false;
     }
 
     public function confirmItemDelete($id)
