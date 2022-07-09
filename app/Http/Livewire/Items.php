@@ -12,10 +12,14 @@ class Items extends Component
 
     public $active;
     public $q;
+    public $sortBy = 'id';
+    public $sortAsc = true;
 
     protected $queryString = [
         'active' => ['except' => false],
-        'q' => ['except' => '']
+        'q' => ['except' => ''],
+        'sortBy' => ['except' => 'id'],
+        'sortAsc' => ['except' => true],
     ];
 
     public function render()
@@ -30,10 +34,14 @@ class Items extends Component
             ->when($this->active, function($query) {
                 return $query->active();
             })
-            ->paginate(10);
+            ->orderBy($this->sortBy, $this->sortAsc ? 'ASC' : 'DESC');
+
+        $query = $items->toSql();
+        $items = $items->paginate(10);
 
         return view('livewire.items', [
             'items' => $items,
+            'query' => $query,
         ]);
     }
 
@@ -45,5 +53,13 @@ class Items extends Component
     public function updatingQ()
     {
         $this->resetPage();
+    }
+
+    public function sortBy($field)
+    {
+        if($field == $this->sortBy) {
+            $this->sortAsc = !$this->sortAsc;
+        }
+        $this->sortBy = $field;
     }
 }

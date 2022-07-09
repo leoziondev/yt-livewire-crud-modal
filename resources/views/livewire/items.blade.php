@@ -1,6 +1,7 @@
 <div class="bg-white">
     <div class="p-4 text-xl font-bold">
-        Items
+        Items<br>
+        {{ $query }}
     </div>
     <div>
         <div class="flex justify-between items-center p-4">
@@ -19,11 +20,31 @@
         <table class="table-auto w-full">
             <thead class="bg-gray-100">
                 <tr class="text-left">
-                    <th class="text-md font-bold text-gray-700 p-4">ID</th>
-                    <th class="text-md font-bold text-gray-700 p-4">Name</th>
-                    <th class="text-md font-bold text-gray-700 p-4">Price</th>
+                    <th class="text-md font-bold text-gray-700 p-4">
+                        <div class="flex items-center">
+                            <button wire:click="sortBy('id')">ID</button>
+                            <x-sort-icon sortField="id" :sort-by="$sortBy" :sort-asc="$sortAsc" />
+                        </div>
+                    </th>
+                    <th class="text-md font-bold text-gray-700 p-4">
+                        <div class="flex items-center">
+                            <button wire:click="sortBy('name')">Name</button>
+                            <x-sort-icon sortField="name" :sort-by="$sortBy" :sort-asc="$sortAsc" />
+                        </div>
+                    </th>
+                    <th class="text-md font-bold text-gray-700 p-4">
+                        <div class="flex items-center">
+                            <button wire:click="sortBy('price')">Price</button>
+                            <x-sort-icon sortField="price" :sort-by="$sortBy" :sort-asc="$sortAsc" />
+                        </div>
+                    </th>
                     @if(!$active)
-                    <th class="text-md font-bold text-gray-700 p-4">Status</th>
+                    <th class="text-md font-bold text-gray-700 p-4">
+                        <div class="flex items-center">
+                            <button wire:click="sortBy('status')">Status</button>
+                            <x-sort-icon sortField="status" :sort-by="$sortBy" :sort-asc="$sortAsc" />
+                        </div>
+                    </th>
                     @endif
                     <th></th>
                 </tr>
