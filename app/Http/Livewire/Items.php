@@ -15,6 +15,7 @@ class Items extends Component
     public $sortBy = 'id';
     public $sortAsc = false;
 
+    // public $id;
     public $name;
     public $price;
     public $status = 0;
@@ -82,16 +83,35 @@ class Items extends Component
         $this->confirmingItemAdd = true;
     }
 
+    public function confirmItemEdit(Item $item)
+    {
+        $this->item = $item;
+        $this->name = $item->name;
+        $this->price = $item->price;
+        $this->status = $item->status;
+
+        $this->confirmingItemAdd = true;
+    }
+
     public function saveItem()
     {
         $this->validate();
 
-        Item::create([
-            'user_id'   => auth()->user()->id,
-            'name'      => $this->name,
-            'price'     => $this->price,
-            'status'    => $this->status,
-        ]);
+        if (isset($this->item->id)) {
+            // dd($this->name);
+            $this->item->update([
+                'name'      => $this->name,
+                'price'     => $this->price,
+                'status'    => $this->status,
+            ]);
+        } else {
+            Item::create([
+                'user_id'   => auth()->user()->id,
+                'name'      => $this->name,
+                'price'     => $this->price,
+                'status'    => $this->status,
+            ]);
+        }
 
         $this->confirmingItemAdd = false;
     }

@@ -60,9 +60,9 @@
                     <td class="px-4 py-2">{{ $item->status ? 'Active' : 'Not-Active' }}</td>
                     @endif
                     <td class="px-4 py-2 flex justify-end">
-                        {{-- <button class="bg-gray-100 rounded-md p-2 mr-2 text-gray-400 hover:text-gray-600" wire:click="confirmItemEdit" wire:loading.attr="disabled">
+                        <button class="bg-gray-100 rounded-md p-2 mr-2 text-gray-400 hover:text-gray-600" wire:click="confirmItemEdit({{ $item->id }})" wire:loading.attr="disabled">
                             <x-icons.edit />
-                        </button> --}}
+                        </button>
                         <button wire:click="confirmItemDelete({{ $item->id }})" wire:loading.attr="disabled" class="bg-gray-100 rounded-md p-2 mr-2 text-gray-400 hover:text-white hover:bg-red-500">
                             <x-icons.trash />
                         </button>
@@ -78,7 +78,7 @@
 
     <x-jet-dialog-modal wire:model="confirmingItemAdd">
         <x-slot name="title">
-            {{ __('Add Item') }}
+            {{ isset($this->item->id) ? 'Edit Item' : 'Add Item' }}
         </x-slot>
 
         <x-slot name="content">
@@ -106,7 +106,7 @@
             </x-jet-secondary-button>
 
             <x-jet-button class="bg-indigo-500 hover:bg-indigo-400 ml-3" wire:click="saveItem()" wire:loading.attr="disabled">
-                {{ __('Add Item') }}
+                {{ isset($this->item->id) ? 'Update Item' : 'Add Item' }}
             </x-jet-button>
         </x-slot>
     </x-jet-dialog-modal>
