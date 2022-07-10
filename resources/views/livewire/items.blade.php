@@ -1,8 +1,23 @@
 <div class="bg-white">
+    @if (session()->has('message'))
+        <div
+            x-data="{show: true}"
+            x-show="show"
+            class="flex items-center justify-between bg-indigo-500 text-indigo-100 text-sm font-bold px-4 py-3 rounded-md m-4"
+            role="alert"
+        >
+            <div class="flex items-center">
+                <x-icons.thumb-up class="mr-2" />
+                <p>{{ session('message') }}</p>
+            </div>
+            <button @click="show = false" class="float-right">
+                <x-icons.close />
+            </button>
+        </div>
+    @endif
     <div class="p-4 flex items-center justify-between">
         <span class="text-xl font-bold">Items</span>
         <x-jet-button wire:click="confirmItemAdd" class="bg-indigo-500 hover:bg-indigo-400">Add Item</x-jet-button>
-        {{-- <br>{{ $query }} --}}
     </div>
     <div>
         <div class="flex justify-between items-center p-4">
@@ -111,7 +126,7 @@
         </x-slot>
     </x-jet-dialog-modal>
 
-    <x-jet-dialog-modal wire:model="confirmingItemDelete">
+    <x-jet-confirmation-modal wire:model="confirmingItemDelete">
         <x-slot name="title">
             {{ __('Delete Item') }}
         </x-slot>
@@ -129,5 +144,5 @@
                 {{ __('Delete') }}
             </x-jet-danger-button>
         </x-slot>
-    </x-jet-dialog-modal>
+    </x-jet-confirmation-modal>
 </div>

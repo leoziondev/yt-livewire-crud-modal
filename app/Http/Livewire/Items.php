@@ -104,6 +104,8 @@ class Items extends Component
                 'price'     => $this->price,
                 'status'    => $this->status,
             ]);
+
+            session()->flash('message', 'Item Updated Successfully!');
         } else {
             Item::create([
                 'user_id'   => auth()->user()->id,
@@ -111,6 +113,8 @@ class Items extends Component
                 'price'     => $this->price,
                 'status'    => $this->status,
             ]);
+
+            session()->flash('message', 'Item Created Successfully!');
         }
 
         $this->confirmingItemAdd = false;
